@@ -23,7 +23,7 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 // routes
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
 // middlewares (after router)
 app.use(notFound);
