@@ -21,9 +21,6 @@ const createToken = (user) => {
 
 exports.register = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.profileImage = `${req.file.path.replace("\\", "/")}`;
-    }
     console.log(req.body.isStaff);
     // overwrite and hash password
     const { password, confirmPass } = req.body;
@@ -31,7 +28,7 @@ exports.register = async (req, res, next) => {
 
     // Password validation
     if (password !== confirmPass) {
-      return res.status(400).json({ message: "Password doesn't match" });
+      return res.status(403).json({ message: "Password doesn't match" });
     }
 
     // Create User
