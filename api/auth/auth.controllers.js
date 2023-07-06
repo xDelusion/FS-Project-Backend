@@ -31,8 +31,31 @@ exports.register = async (req, res, next) => {
     if (password !== confirmPass) {
       return res.status(403).json({ message: "Password doesn't match" });
     }
+
+    const passwordPattern = /[a-zA-Z0-9]{8,30}/;
+    const isPasswordValid = passwordPattern.test(password);
+    if (!isPasswordValid) {
+      return res.status(403).json({
+        message:
+          "Password must at least 8 digits with a combination of numbers and letters.",
+      });
+    }
+
     req.body.password = await hashPassword(password);
     delete req.body.isStaff;
+
+    // Existing User error
+    const existingEmail = await User.findOne({ email: req.body.email });
+    if (existingEmail) {
+      return res.status(409).json({ message: "Email already exists" });
+    }
+
+    const existingUsername = await User.findOne({
+      username: req.body.username,
+    });
+    if (existingUsername) {
+      return res.status(409).json({ message: "Username already exists" });
+    }
 
     // Create User
     const newUser = await User.create(req.body);
