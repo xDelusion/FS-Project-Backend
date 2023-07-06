@@ -1,15 +1,15 @@
+const { JWT_SECRET } = require("../config/keys");
 const User = require("../db/models/User");
 const bcrypt = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
 const { fromAuthHeaderAsBearerToken } = require("passport-jwt").ExtractJwt;
-require("dotenv").config();
 
 exports.localStrategy = new LocalStrategy(
-  { usernameField: "username" },
-  async (username, password, done) => {
+  { usernameField: "email" },
+  async (email, password, done) => {
     try {
-      const foundUser = await User.findOne({ username: username });
+      const foundUser = await User.findOne({ email: email });
       if (!foundUser) {
         return done(null, false);
       }
@@ -18,7 +18,6 @@ exports.localStrategy = new LocalStrategy(
         return done(null, false);
       }
 
-      // req.user = foundUser
       done(null, foundUser);
     } catch (error) {
       return done(error);
@@ -29,7 +28,7 @@ exports.localStrategy = new LocalStrategy(
 exports.jwtStrategy = new JWTStrategy(
   {
     jwtFromRequest: fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET,
+    secretOrKey: JWT_SECRET,
   },
   async (jwtPayLoad, done) => {
     if (Date.now() > jwtPayLoad.exp * 1000) {

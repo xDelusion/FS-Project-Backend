@@ -3,12 +3,12 @@ const express = require("express");
 const morgan = require("morgan");
 const passport = require("passport");
 const { localStrategy, jwtStrategy } = require("./middlewares/passport");
-require("dotenv").config();
 const connectDB = require("./database");
 const cors = require("cors");
 const notFound = require("./middlewares/notFound");
 const errorHandle = require("./middlewares/errorHandle");
 const authRoutes = require("./api/auth/auth.routes");
+const { PORT } = require("./config/keys");
 
 // setup
 const app = express();
@@ -23,14 +23,13 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 // routes
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
 // middlewares (after router)
 app.use(notFound);
 app.use(errorHandle);
 
 // run server
-const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`App is running on PORT: ${PORT}`);
 });

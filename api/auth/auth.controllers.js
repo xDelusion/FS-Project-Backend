@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
-require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../../db/models/User");
+const { JWT_SECRET, JWT_EXP } = require("../../config/keys");
 
 const hashPassword = async (password) => {
   const saltRounds = 10;
@@ -15,7 +15,8 @@ const createToken = (user) => {
     username: user.username,
     email: user.email,
   };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "5h" });
+
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXP });
   return token;
 };
 
@@ -25,9 +26,11 @@ exports.register = async (req, res, next) => {
       req.body.profileImage = `${req.file.path.replace("\\", "/")}`;
     }
     console.log(req.body.isStaff);
+
     // overwrite and hash password
     const { password, confirmPass } = req.body;
     req.body.password = await hashPassword(password);
+    req.body.confirmPass = await hashPassword(confirmPass);
 
     // Password validation
     if (password !== confirmPass) {
@@ -35,7 +38,11 @@ exports.register = async (req, res, next) => {
     }
 
     // Create User
-    const newUser = await User.create(req.body);
+    const newUser = await User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    });
 
     // Create token
     const token = createToken(newUser);
