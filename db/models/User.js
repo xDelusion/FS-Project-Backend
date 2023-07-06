@@ -9,7 +9,6 @@ const authSchema = new Schema(
     },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    confirmPass: { type: String, required: true },
     isStaff: { type: Boolean, default: false },
   },
   { timestamps: true }
