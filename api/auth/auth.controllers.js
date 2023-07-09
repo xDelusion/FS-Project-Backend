@@ -24,6 +24,7 @@ const createToken = (user) => {
 exports.register = async (req, res, next) => {
   try {
     console.log(req.body.isStaff);
+
     // overwrite and hash password
     const { password, confirmPass } = req.body;
 
