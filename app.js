@@ -9,7 +9,7 @@ const cors = require("cors");
 const notFound = require("./middlewares/notFound");
 const errorHandle = require("./middlewares/errorHandle");
 const authRoutes = require("./api/auth/auth.routes");
-const categoryRoutes = require("./api/auth/categoryList/categoryList.routes");
+const categoryRoutes = require("./api/categoryList/categoryList.routes");
 
 // setup
 const app = express();
