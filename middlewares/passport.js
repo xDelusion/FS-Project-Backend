@@ -11,11 +11,11 @@ exports.localStrategy = new LocalStrategy(
     try {
       const foundUser = await User.findOne({ email: email });
       if (!foundUser) {
-        return done(null, false);
+        return done({ message: "Wrong Email or Password" }, false);
       }
       const passwordsMatch = await bcrypt.compare(password, foundUser.password);
       if (!passwordsMatch) {
-        return done(null, false);
+        return done({ message: "Wrong Email or Password" }, false);
       }
 
       // req.user = foundUser
