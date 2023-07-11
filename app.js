@@ -25,7 +25,7 @@ passport.use(jwtStrategy);
 
 // routes
 app.use("/api/auth", authRoutes);
-app.use("/api/auth/categories", categoryRoutes);
+app.use("/api/categories", categoryRoutes);
 
 // middlewares (after router)
 app.use(notFound);
