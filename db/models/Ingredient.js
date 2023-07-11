@@ -11,11 +11,11 @@ const ingredientSchema = new Schema(
     recipeId: [
       {
         type: Schema.Types.ObjectId,
-        ref: "recipe",
+        ref: "Recipe",
       },
     ],
   },
   { timestamps: true }
 );
 
-module.exports = model("ingredient", ingredientSchema);
+module.exports = model("Ingredient", ingredientSchema);

@@ -1,6 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { recipeIngrediants } = require("./ingredients.controller");
+const passport = require("passport");
+const {
+  recipeIngredients,
+  createIngredient,
+} = require("./ingredients.controller");
 
-router.get("/", recipeIngrediants);
+router.get("/", recipeIngredients);
+router.post(
+  "/:recipeId",
+  passport.authenticate("jwt", { session: false }),
+  createIngredient
+);
+
 module.exports = router;

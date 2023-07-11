@@ -11,8 +11,9 @@ const cors = require("cors");
 const notFound = require("./middlewares/notFound");
 const errorHandle = require("./middlewares/errorHandle");
 const authRoutes = require("./api/auth/auth.routes");
-const categoryRoutes = require("./api/categoryList/categoryList.routes");
-const recipeRoutes = require("./api/recipe/recipe.routes");
+const categoryRoutes = require("./api/categories/categories.routes");
+const recipeRoutes = require("./api/recipes/recipes.routes");
+const ingredientRoutes = require("./api/ingredients/ingredients.routes");
 
 // setup
 const app = express();
@@ -31,6 +32,7 @@ passport.use(jwtStrategy);
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/recipes", recipeRoutes);
+app.use("/api/new-ingredients", ingredientRoutes);
 
 // middlewares (after router)
 app.use(notFound);

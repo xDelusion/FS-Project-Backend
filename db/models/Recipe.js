@@ -10,17 +10,17 @@ const RecipeSchema = new Schema(
     categoryId: [
       {
         type: Schema.Types.ObjectId,
-        ref: "category",
+        ref: "Category",
       },
     ],
     ingredientId: String,
     userId: [
       {
         type: Schema.Types.ObjectId,
-        ref: "auth",
+        ref: "Auth",
       },
     ],
-    image: { type: String, required: true },
+    image: { type: String, required: false },
     steps: String,
   },
   { timestamps: true }
