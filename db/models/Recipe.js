@@ -13,7 +13,7 @@ const RecipeSchema = new Schema(
         ref: "category",
       },
     ],
-    ingredients: String,
+    ingredientId: String,
     userId: [
       {
         type: Schema.Types.ObjectId,

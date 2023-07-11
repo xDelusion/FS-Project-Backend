@@ -44,3 +44,22 @@ exports.addRecipe = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteRecipe = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const { recipeId } = req.params;
+    const recipe = await Recipe.findById(recipeId);
+    const createdBy = recipe.creatorId === user.id;
+    if (createdBy) {
+      await Recipe.deleteById(recipeId);
+      return res.status(402).json();
+    } else {
+      res
+        .status(403)
+        .json({ message: "you are NOT the creator of this recipe" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
