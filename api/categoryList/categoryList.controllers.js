@@ -9,16 +9,27 @@ exports.getCategories = async (req, res, next) => {
   }
 };
 
-exports.createCategory = async (req, res, next) => {
+exports.addCategory = async (req, res, next) => {
   try {
-    if (!req.user.isStaff) {
-      const err = new Error(
-        "Only staff members are authorized to create a category"
-      );
-      err.status = 404;
-      return next(err);
+    // if (!req.user.isStaff) {
+    //   const err = new Error(
+    //     "Only staff members are authorized to create a category"
+    //   );
+    //   err.status = 404;
+    //   return next(err);
+    // }
+
+    const { name } = req.body;
+    if (name == "") {
+      return res.status(403).json({ message: "Field can't be empty" });
     }
-    const category = await Category.create(req.body);
+
+    const existingCategory = await Category.findOne({ name });
+    if (existingCategory) {
+      return res.status(400).json({ message: "Category already exists" });
+    }
+
+    const category = await Category.create({ name });
     res.status(201).json(category);
   } catch (err) {
     next(err);
