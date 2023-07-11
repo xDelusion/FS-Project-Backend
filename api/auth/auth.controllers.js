@@ -14,6 +14,7 @@ const createToken = (user) => {
     _id: user._id,
     username: user.username,
     email: user.email,
+    isStaff: user.isStaff,
   };
   const token = jwt.sign(payload, JWT_SECRET, {
     expiresIn: JWT_EXP,
