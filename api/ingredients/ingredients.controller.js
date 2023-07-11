@@ -1,15 +1,10 @@
 const Ingredient = require("../../db/models/Ingredient");
-const Recipe = require("../../db/models/Recipe");
 
-exports.recipeIngredients = async (req, res, next) => {
+exports.getIngredients = async (req, res, next) => {
   try {
-    const { recipeId } = req.params;
-    const recipe = await Recipe.findById(recipeId);
-    if (!recipe) {
-      return res.status(404).json({ message: "Category not found" });
-    }
-    const ingredients = await recipe.ingredientId();
-    res.status(204).json(recipe, ingredients);
+    const ingredient = await Ingredient.find();
+
+    res.status(200).json(ingredient);
   } catch (err) {
     next(err);
   }
