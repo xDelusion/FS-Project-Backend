@@ -8,7 +8,7 @@ const {
 
 router.get("/", getIngredients);
 router.post(
-  "/:recipeId",
+  "/",
   passport.authenticate("jwt", { session: false }),
   createIngredient
 );
