@@ -2,7 +2,7 @@ const Category = require("../../db/models/Category");
 
 exports.getCategories = async (req, res, next) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().populate("recipes");
     return res.status(200).json(categories);
   } catch (err) {
     next(err);

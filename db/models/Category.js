@@ -7,7 +7,7 @@ const CategorySchema = new Schema(
       required: true,
       unique: true,
     },
-    recipes: [{ type: Schema.Types.ObjectId, ref: "recipe" }],
+    recipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
   },
   { timestamps: true }
 );
