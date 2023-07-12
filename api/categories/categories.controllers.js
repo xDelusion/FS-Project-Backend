@@ -11,13 +11,13 @@ exports.getCategories = async (req, res, next) => {
 
 exports.addCategory = async (req, res, next) => {
   try {
-    // if (!req.user.isStaff) {
-    //   const err = new Error(
-    //     "Only staff members are authorized to create a category"
-    //   );
-    //   err.status = 404;
-    //   return next(err);
-    // }
+    if (!req.user.isStaff) {
+      const err = new Error(
+        "Only staff members are authorized to create a category"
+      );
+      err.status = 404;
+      return next(err);
+    }
 
     const { name } = req.body;
     if (name == "") {

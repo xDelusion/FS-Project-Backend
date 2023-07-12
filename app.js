@@ -32,7 +32,7 @@ passport.use(jwtStrategy);
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/recipes", recipeRoutes);
-app.use("/api/new-ingredients", ingredientRoutes);
+app.use("/api/ingredients", ingredientRoutes);
 
 // middlewares (after router)
 app.use(notFound);
